@@ -15,7 +15,7 @@
         body {
             font-family: 'Arial', sans-serif;
             text-align: center;
-            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background: url('20250316MeiHoHouse-01.jpg') no-repeat center center fixed; /* 更換背景圖片 */
             background-size: cover;
             color: #fff;
             position: relative;
@@ -61,7 +61,7 @@
             border-radius: 25px;
             width: 220px;
             max-width: 80%;
-            background: rgba(255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             box-sizing: border-box;
@@ -93,9 +93,9 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         #gallery {
-            margin-top: 10px;
+            margin-top: 0;
             width: 100%;
-            max-width: 1000px;
+            height: 100vh;
             box-sizing: border-box;
             position: relative;
             opacity: 0;
@@ -104,21 +104,15 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
         }
         #gallery.show {
             opacity: 1;
         }
-        #gallery h2 {
-            color: #ffffff;
-            font-size: 32px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in;
-            margin: 0 0 15px;
-        }
         .slideshow-container {
             position: relative;
             width: 100%;
-            height: 80vh;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -126,8 +120,9 @@
         }
         .slideshow-container img {
             display: none;
-            max-width: 95%;
-            max-height: 95%;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
             height: auto;
             border: 5px solid rgba(255, 255, 255, 0.8);
             border-radius: 10px;
@@ -150,16 +145,14 @@
             box-sizing: border-box;
         }
         .nav-buttons button {
-            background: rgba(255, 255, 255, 0.6); /* 淺色背景 */
+            background: rgba(255, 255, 255, 0.6);
+            color: #666;
             border: 2px solid #fff;
-            padding: 10px;
+            padding: 12px 18px;
+            font-size: 30px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
-        }
-        .nav-buttons button img {
-            width: 30px; /* 調整圖片大小 */
-            height: 30px;
         }
         .nav-buttons button:hover {
             background: rgba(255, 255, 255, 0.9);
@@ -183,22 +176,19 @@
                 font-size: 18px;
             }
             .slideshow-container {
-                height: 70vh;
+                height: 100%;
             }
             .slideshow-container img {
-                max-width: 90%;
-                max-height: 90%;
+                max-width: 100%;
+                max-height: 100%;
             }
             input[type="password"] {
                 width: 180px;
                 max-width: 90%;
             }
             .nav-buttons button {
-                padding: 8px;
-            }
-            .nav-buttons button img {
-                width: 24px;
-                height: 24px;
+                padding: 10px 15px;
+                font-size: 24px;
             }
         }
         @media (max-width: 480px) {
@@ -208,15 +198,12 @@
             .intro-text {
                 font-size: 16px;
             }
-            #gallery h2 {
-                font-size: 24px;
-            }
             .slideshow-container {
-                height: 65vh;
+                height: 100%;
             }
             .slideshow-container img {
-                max-width: 95%;
-                max-height: 95%;
+                max-width: 100%;
+                max-height: 100%;
             }
             input[type="password"] {
                 width: 160px;
@@ -229,21 +216,13 @@
                 padding: 0 10px;
             }
             .nav-buttons button {
-                padding: 6px;
-            }
-            .nav-buttons button img {
-                width: 20px;
-                height: 20px;
+                padding: 8px 12px;
+                font-size: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <audio id="background-music" autoplay loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
-        您的瀏覽器不支援音頻播放。
-    </audio>
-
     <h1>美荷樓與木棉花</h1>
     <div class="intro-text">
         一九五三年，石硤尾一場大火，五萬八千人失去家園。次年，八座徙置大廈落成，美荷樓靜立其中。歲月流轉，舊邨重建，唯美荷樓守候時光，於二零一三年化作青年旅舍。樓前木棉挺拔，花開如焰，沿斜徑漫步，可細賞花影搖曳。愛花之人駐足流連，半日光影後，步入旅舍餐廳，品一盞茶，任時光輕淌，靜享一日閒情。
@@ -253,7 +232,6 @@
     <button onclick="checkPassword()">進入</button>
 
     <div id="gallery" style="display: none;">
-        <h2>美荷樓與木棉花</h2>
         <div class="slideshow-container">
             <img src="20250316MeiHoHouse-01.jpg" alt="20250316MeiHoHouse-01.jpg">
             <img src="20250316-CottonTree-01.jpg" alt="20250316-CottonTree-01.jpg">
@@ -282,12 +260,8 @@
             <img src="20250316-CottonTree-24.jpg" alt="20250316-CottonTree-24.jpg">
             <img src="20250316MeiHoHouse-02.jpg" alt="20250316MeiHoHouse-02.jpg">
             <div class="nav-buttons">
-                <button onclick="changeSlide(-1)">
-                    <img src="left-arrow.png" alt="Previous">
-                </button>
-                <button onclick="changeSlide(1)">
-                    <img src="right-arrow.png" alt="Next">
-                </button>
+                <button onclick="changeSlide(-1)">◄</button>
+                <button onclick="changeSlide(1)">►</button>
             </div>
         </div>
     </div>
@@ -305,13 +279,11 @@
                 document.getElementById("pass").style.display = "none";
                 document.querySelector("button[onclick='checkPassword()']").style.display = "none";
                 document.querySelector("p").style.display = "none";
-                setTimeout(() => {
-                    document.querySelector(".intro-text").style.display = "none";
-                    document.getElementById("gallery").style.display = "block";
-                    document.getElementById("gallery").classList.add("show");
-                    showSlide(currentSlide);
-                    startAutoSlide();
-                }, 8000);
+                document.querySelector(".intro-text").style.display = "none";
+                document.getElementById("gallery").style.display = "block";
+                document.getElementById("gallery").classList.add("show");
+                showSlide(currentSlide);
+                startAutoSlide();
             } else {
                 alert("密碼錯誤！");
             }
