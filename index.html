@@ -96,7 +96,7 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100vh;
+            height: 100vh; /* 占滿螢幕高度 */
             box-sizing: border-box;
             position: relative;
             opacity: 0;
@@ -121,8 +121,8 @@
         }
         .slideshow-container img {
             display: none;
-            max-width: 100%;
-            max-height: calc(100% - 40px);
+            max-width: calc(100% - 20px); /* 考慮邊框和陰影，填滿螢幕寬度 */
+            max-height: calc(100% - 60px); /* 考慮邊框、陰影和頁碼空間，填滿螢幕高度 */
             width: auto;
             height: auto;
             border: 5px solid rgba(255, 255, 255, 0.8);
@@ -144,23 +144,29 @@
             display: flex;
             justify-content: space-between;
             transform: translateY(-50%);
-            padding: 0 15px;
-            box-sizing: border-box;
             z-index: 2;
+            pointer-events: none; /* 確保按鈕區域可點擊，但容器不影響其他元素 */
         }
         .nav-buttons button {
-            background: rgba(255, 255, 255, 0.6);
-            color: #666;
-            border: 2px solid #fff;
-            padding: 12px 18px;
-            font-size: 30px;
-            border-radius: 50%;
+            background: transparent; /* 移除背景 */
+            color: #e0e0e0; /* 淺色符號 */
+            border: none; /* 移除邊框 */
+            padding: 10px;
+            font-size: 40px; /* 調整符號大小 */
             cursor: pointer;
             transition: all 0.3s ease;
+            pointer-events: auto; /* 確保按鈕可點擊 */
+            position: absolute;
+        }
+        .nav-buttons button:first-child {
+            left: 15px; /* 與圖片左邊框對齊 */
+        }
+        .nav-buttons button:last-child {
+            right: 15px; /* 與圖片右邊框對齊 */
         }
         .nav-buttons button:hover {
-            background: rgba(255, 255, 255, 0.9);
-            transform: scale(1.1);
+            color: #ffffff; /* 懸停時變為白色 */
+            transform: scale(1.2);
         }
         .slide-counter {
             position: absolute;
@@ -193,16 +199,22 @@
                 height: 100%;
             }
             .slideshow-container img {
-                max-width: 100%;
-                max-height: calc(100% - 36px);
+                max-width: calc(100% - 20px);
+                max-height: calc(100% - 56px);
             }
             input[type="password"] {
                 width: 180px;
                 max-width: 90%;
             }
             .nav-buttons button {
-                padding: 10px 15px;
-                font-size: 24px;
+                font-size: 36px;
+                padding: 8px;
+            }
+            .nav-buttons button:first-child {
+                left: 12px;
+            }
+            .nav-buttons button:last-child {
+                right: 12px;
             }
             .slide-counter {
                 font-size: 14px;
@@ -220,8 +232,8 @@
                 height: 100%;
             }
             .slideshow-container img {
-                max-width: 100%;
-                max-height: calc(100% - 32px);
+                max-width: calc(100% - 20px);
+                max-height: calc(100% - 52px);
             }
             input[type="password"] {
                 width: 160px;
@@ -230,12 +242,15 @@
             button {
                 padding: 10px 20px;
             }
-            .nav-buttons {
-                padding: 0 10px;
-            }
             .nav-buttons button {
-                padding: 8px 12px;
-                font-size: 20px;
+                font-size: 30px;
+                padding: 6px;
+            }
+            .nav-buttons button:first-child {
+                left: 10px;
+            }
+            .nav-buttons button:last-child {
+                right: 10px;
             }
             .slide-counter {
                 font-size: 12px;
@@ -282,8 +297,8 @@
             <img src="20250316-CottonTree-24.jpg" alt="20250316-CottonTree-24.jpg">
             <img src="20250316MeiHoHouse-02.jpg" alt="20250316MeiHoHouse-02.jpg">
             <div class="nav-buttons">
-                <button onclick="changeSlide(-1)">◄</button>
-                <button onclick="changeSlide(1)">►</button>
+                <button onclick="changeSlide(-1)">&lt;</button> <!-- 改為 < 符號 -->
+                <button onclick="changeSlide(1)">&gt;</button> <!-- 改為 > 符號 -->
             </div>
             <div class="slide-counter"></div>
         </div>
@@ -299,18 +314,15 @@
         function checkPassword() {
             const password = document.getElementById("pass").value;
             if (password === "12345") {
-                // 隱藏首頁所有元素
-                document.getElementById("main-title").style.display = "none"; // 明確隱藏標題
+                document.getElementById("main-title").style.display = "none";
                 document.getElementById("pass").style.display = "none";
                 document.querySelector("button[onclick='checkPassword()']").style.display = "none";
                 document.querySelector("p").style.display = "none";
                 document.querySelector(".intro-text").style.display = "none";
-                // 顯示幻燈片
                 document.getElementById("gallery").style.display = "block";
                 document.getElementById("gallery").classList.add("show");
                 showSlide(currentSlide);
                 startAutoSlide();
-                // 更改瀏覽器標籤頁標題
                 document.title = "幻燈片模式";
             } else {
                 alert("密碼錯誤！");
