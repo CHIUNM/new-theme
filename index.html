@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美荷樓與木棉花</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            padding: 20px;
+        }
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 48px;
+            margin: 0 10px 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in;
+            word-wrap: break-word;
+        }
+        .intro-text {
+            color: #e0e0e0;
+            font-size: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            line-height: 1.6;
+            max-width: 800px;
+            text-align: justify;
+            animation: fadeIn 1s ease-in;
+        }
+        input[type="password"] {
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            width: 220px;
+            max-width: 80%;
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        input[type="password"]:focus {
+            outline: none;
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.5);
+            background: rgba(255, 255, 255, 1);
+        }
+        button {
+            padding: 12px 30px;
+            font-size: 16px;
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        button:hover {
+            background: linear-gradient(45deg, #2980b9, #3498db);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        #gallery {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 1000px;
+            box-sizing: border-box;
+            position: relative;
+            opacity: 0;
+            transition: opacity 1s ease-in;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        #gallery.show {
+            opacity: 1;
+        }
+        #gallery h2 {
+            color: #ffffff;
+            font-size: 32px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in;
+            margin: 0 0 15px;
+        }
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .slideshow-container img {
+            display: none;
+            max-width: 95%;
+            max-height: 95%;
+            height: auto;
+            border: 5px solid rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: opacity 0.5s ease;
+            box-sizing: border-box;
+        }
+        .slideshow-container img.active {
+            display: block;
+            opacity: 1;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+        .nav-buttons button {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 12px 18px;
+            font-size: 18px;
+            border-radius: 50%;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 36px;
+            }
+            .intro-text {
+                font-size: 18px;
+            }
+            .slideshow-container {
+                height: 70vh;
+            }
+            .slideshow-container img {
+                max-width: 90%;
+                max-height: 90%;
+            }
+            input[type="password"] {
+                width: 180px;
+                max-width: 90%;
+            }
+            .nav-buttons button {
+                padding: 10px 15px;
+                font-size: 16px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 28px;
+            }
+            .intro-text {
+                font-size: 16px;
+            }
+            #gallery h2 {
+                font-size: 24px;
+            }
+            .slideshow-container {
+                height: 65vh;
+            }
+            .slideshow-container img {
+                max-width: 95%;
+                max-height: 95%;
+            }
+            input[type="password"] {
+                width: 160px;
+                max-width: 85%;
+            }
+            button {
+                padding: 10px 20px;
+            }
+            .nav-buttons {
+                padding: 0 10px;
+            }
+            .nav-buttons button {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 背景音樂 -->
+    <audio id="background-music" autoplay loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        您的瀏覽器不支援音頻播放。
+    </audio>
+
+    <h1>美荷樓與木棉花</h1>
+    <div class="intro-text">
+        一九五三年，石硤尾一場大火，五萬八千人失去家園。次年，八座徙置大廈落成，美荷樓靜立其中。歲月流轉，舊邨重建，唯美荷樓守候時光，於二零一三年化作青年旅舍。樓前木棉挺拔，花開如焰，沿斜徑漫步，可細賞花影搖曳。愛花之人駐足流連，半日光影後，步入旅舍餐廳，品一盞茶，任時光輕淌，靜享一日閒情。
+    </div>
+    <p>請輸入密碼來查看照片</p>
+    <input type="password" id="pass" placeholder="輸入密碼">
+    <button onclick="checkPassword()">進入</button>
+
+    <div id="gallery" style="display: none;">
+        <h2>美荷樓與木棉花</h2>
+        <div class="slideshow-container">
+            <img src="20250316MeiHoHouse-01.jpg" alt="20250316MeiHoHouse-01.jpg">
+            <img src="20250316-CottonTree-01.jpg" alt="20250316-CottonTree-01.jpg">
+            <img src="20250316-CottonTree-02.jpg" alt="20250316-CottonTree-02.jpg">
+            <img src="20250316-CottonTree-03.jpg" alt="20250316-CottonTree-03.jpg">
+            <img src="20250316-CottonTree-04.jpg" alt="20250316-CottonTree-04.jpg">
+            <img src="20250316-CottonTree-05.jpg" alt="20250316-CottonTree-05.jpg">
+            <img src="20250316-CottonTree-06.jpg" alt="20250316-CottonTree-06.jpg">
+            <img src="20250316-CottonTree-07.jpg" alt="20250316-CottonTree-07.jpg">
+            <img src="20250316-CottonTree-08.jpg" alt="20250316-CottonTree-08.jpg">
+            <img src="20250316-CottonTree-09.jpg" alt="20250316-CottonTree-09.jpg">
+            <img src="20250316-CottonTree-10.jpg" alt="20250316-CottonTree-10.jpg">
+            <img src="20250316-CottonTree-11.jpg" alt="20250316-CottonTree-11.jpg">
+            <img src="20250316-CottonTree-12.jpg" alt="20250316-CottonTree-12.jpg">
+            <img src="20250316-CottonTree-13.jpg" alt="20250316-CottonTree-13.jpg">
+            <img src="20250316-CottonTree-14.jpg" alt="20250316-CottonTree-14.jpg">
+            <img src="20250316-CottonTree-15.jpg" alt="20250316-CottonTree-15.jpg">
+            <img src="20250316-CottonTree-16.jpg" alt="20250316-CottonTree-16.jpg">
+            <img src="20250316-CottonTree-17.jpg" alt="20250316-CottonTree-17.jpg">
+            <img src="20250316-CottonTree-18.jpg" alt="20250316-CottonTree-18.jpg">
+            <img src="20250316-CottonTree-19.jpg" alt="20250316-CottonTree-19.jpg">
+            <img src="20250316-CottonTree-20.jpg" alt="20250316-CottonTree-20.jpg">
+            <img src="20250316-CottonTree-21.jpg" alt="20250316-CottonTree-21.jpg">
+            <img src="20250316-CottonTree-22.jpg" alt="20250316-CottonTree-22.jpg">
+            <img src="20250316-CottonTree-23.jpg" alt="20250316-CottonTree-23.jpg">
+            <img src="20250316-CottonTree-24.jpg" alt="20250316-CottonTree-24.jpg">
+            <img src="20250316MeiHoHouse-02.jpg" alt="20250316MeiHoHouse-02.jpg">
+            <div class="nav-buttons">
+                <button onclick="changeSlide(-1)">上一張</button>
+                <button onclick="changeSlide(1)">下一張</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slideshow-container img');
+
+        function checkPassword() {
+            const password = document.getElementById("pass").value;
+            if (password === "12345") {
+                document.getElementById("gallery").style.display = "block";
+                document.getElementById("gallery").classList.add("show");
+                document.getElementById("pass").style.display = "none";
+                document.querySelector("button[onclick='checkPassword()']").style.display = "none";
+                document.querySelector("p").style.display = "none";
+                document.querySelector(".intro-text").style.display = "none";
+                showSlide(currentSlide);
+            } else {
+                alert("密碼錯誤！");
+            }
+        }
+
+        function showSlide(index) {
+            if (index >= slides.length) {
+                currentSlide = 0;
+            } else if (index < 0) {
+                currentSlide = slides.length - 1;
+            } else {
+                currentSlide = index;
+            }
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+    </script>
+</body>
+</html>
