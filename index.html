@@ -117,7 +117,7 @@
             justify-content: center;
             align-items: center;
             touch-action: pan-y;
-            overflow: visible; /* 確保頁碼不被裁切 */
+            overflow: visible;
         }
         .slideshow-container img {
             display: none;
@@ -131,7 +131,7 @@
             transition: opacity 0.5s ease;
             box-sizing: border-box;
             position: relative;
-            z-index: 1; /* 確保照片在頁碼之下 */
+            z-index: 1;
         }
         .slideshow-container img.active {
             display: block;
@@ -146,7 +146,7 @@
             transform: translateY(-50%);
             padding: 0 15px;
             box-sizing: border-box;
-            z-index: 2; /* 確保按鈕在照片和頁碼之上 */
+            z-index: 2;
         }
         .nav-buttons button {
             background: rgba(255, 255, 255, 0.6);
@@ -164,13 +164,13 @@
         }
         .slide-counter {
             position: absolute;
-            bottom: 20px; /* 增加底部距離，確保可見 */
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             color: #e0e0e0;
             font-size: 16px;
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-            z-index: 3; /* 確保頁碼在照片之上 */
+            z-index: 3;
         }
         @keyframes fadeIn {
             from {
@@ -245,7 +245,7 @@
     </style>
 </head>
 <body>
-    <h1>美荷樓與木棉花</h1>
+    <h1 id="main-title">美荷樓與木棉花</h1>
     <div class="intro-text">
         一九五三年，石硤尾一場大火，五萬八千人失去家園。次年，八座徙置大廈落成，美荷樓靜立其中。歲月流轉，舊邨重建，唯美荷樓守候時光，於二零一三年化作青年旅舍。樓前木棉挺拔，花開如焰，沿斜徑漫步，可細賞花影搖曳。愛花之人駐足流連，半日光影後，步入旅舍餐廳，品一盞茶，任時光輕淌，靜享一日閒情。
     </div>
@@ -299,14 +299,19 @@
         function checkPassword() {
             const password = document.getElementById("pass").value;
             if (password === "12345") {
+                // 隱藏首頁所有元素
+                document.getElementById("main-title").style.display = "none"; // 明確隱藏標題
                 document.getElementById("pass").style.display = "none";
                 document.querySelector("button[onclick='checkPassword()']").style.display = "none";
                 document.querySelector("p").style.display = "none";
                 document.querySelector(".intro-text").style.display = "none";
+                // 顯示幻燈片
                 document.getElementById("gallery").style.display = "block";
                 document.getElementById("gallery").classList.add("show");
                 showSlide(currentSlide);
                 startAutoSlide();
+                // 更改瀏覽器標籤頁標題
+                document.title = "幻燈片模式";
             } else {
                 alert("密碼錯誤！");
             }
@@ -323,7 +328,6 @@
 
             slides.forEach(slide => slide.classList.remove('active'));
             slides[currentSlide].classList.add('active');
-            // 更新頁碼
             const slideCounter = document.querySelector('.slide-counter');
             if (slideCounter) {
                 slideCounter.textContent = `${currentSlide + 1}/${slides.length}`;
