@@ -149,10 +149,18 @@
             box-sizing: border-box;
         }
         .nav-buttons button {
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(255, 255, 255, 0.8); /* 淺色背景 */
+            color: #333; /* 深色箭頭 */
+            border: 2px solid #fff; /* 白色邊框 */
             padding: 12px 18px;
-            font-size: 18px;
+            font-size: 24px; /* 調整箭頭大小 */
             border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .nav-buttons button:hover {
+            background: rgba(255, 255, 255, 1); /* 懸停時更亮的背景 */
+            transform: scale(1.1); /* 懸停時放大 */
         }
         @keyframes fadeIn {
             from {
@@ -185,7 +193,7 @@
             }
             .nav-buttons button {
                 padding: 10px 15px;
-                font-size: 16px;
+                font-size: 20px;
             }
         }
         @media (max-width: 480px) {
@@ -217,7 +225,7 @@
             }
             .nav-buttons button {
                 padding: 8px 12px;
-                font-size: 14px;
+                font-size: 18px;
             }
         }
     </style>
@@ -267,8 +275,8 @@
             <img src="20250316-CottonTree-24.jpg" alt="20250316-CottonTree-24.jpg">
             <img src="20250316MeiHoHouse-02.jpg" alt="20250316MeiHoHouse-02.jpg">
             <div class="nav-buttons">
-                <button onclick="changeSlide(-1)">上一張</button>
-                <button onclick="changeSlide(1)">下一張</button>
+                <button onclick="changeSlide(-1)">◄</button>
+                <button onclick="changeSlide(1)">►</button>
             </div>
         </div>
     </div>
@@ -287,6 +295,7 @@
                 document.querySelector("p").style.display = "none";
                 document.querySelector(".intro-text").style.display = "none";
                 showSlide(currentSlide);
+                startAutoSlide(); // 啟動自動播放
             } else {
                 alert("密碼錯誤！");
             }
@@ -307,6 +316,12 @@
 
         function changeSlide(direction) {
             showSlide(currentSlide + direction);
+        }
+
+        function startAutoSlide() {
+            setInterval(() => {
+                changeSlide(1);
+            }, 5000); // 每 5 秒切換一次
         }
     </script>
 </body>
