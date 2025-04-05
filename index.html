@@ -61,7 +61,7 @@
             border-radius: 25px;
             width: 220px;
             max-width: 80%;
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 0.9);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
             box-sizing: border-box;
@@ -122,6 +122,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            touch-action: pan-y;
         }
         .slideshow-container img {
             display: none;
@@ -149,18 +150,20 @@
             box-sizing: border-box;
         }
         .nav-buttons button {
-            background: rgba(255, 255, 255, 0.8); /* 淺色背景 */
-            color: #333; /* 深色箭頭 */
-            border: 2px solid #fff; /* 白色邊框 */
-            padding: 12px 18px;
-            font-size: 24px; /* 調整箭頭大小 */
+            background: rgba(255, 255, 255, 0.6); /* 淺色背景 */
+            border: 2px solid #fff;
+            padding: 10px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
         }
+        .nav-buttons button img {
+            width: 30px; /* 調整圖片大小 */
+            height: 30px;
+        }
         .nav-buttons button:hover {
-            background: rgba(255, 255, 255, 1); /* 懸停時更亮的背景 */
-            transform: scale(1.1); /* 懸停時放大 */
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.1);
         }
         @keyframes fadeIn {
             from {
@@ -172,7 +175,6 @@
                 transform: translateY(0);
             }
         }
-        /* 響應式設計 */
         @media (max-width: 768px) {
             h1 {
                 font-size: 36px;
@@ -192,8 +194,11 @@
                 max-width: 90%;
             }
             .nav-buttons button {
-                padding: 10px 15px;
-                font-size: 20px;
+                padding: 8px;
+            }
+            .nav-buttons button img {
+                width: 24px;
+                height: 24px;
             }
         }
         @media (max-width: 480px) {
@@ -224,14 +229,16 @@
                 padding: 0 10px;
             }
             .nav-buttons button {
-                padding: 8px 12px;
-                font-size: 18px;
+                padding: 6px;
+            }
+            .nav-buttons button img {
+                width: 20px;
+                height: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 背景音樂 -->
     <audio id="background-music" autoplay loop>
         <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
         您的瀏覽器不支援音頻播放。
@@ -275,8 +282,12 @@
             <img src="20250316-CottonTree-24.jpg" alt="20250316-CottonTree-24.jpg">
             <img src="20250316MeiHoHouse-02.jpg" alt="20250316MeiHoHouse-02.jpg">
             <div class="nav-buttons">
-                <button onclick="changeSlide(-1)">◄</button>
-                <button onclick="changeSlide(1)">►</button>
+                <button onclick="changeSlide(-1)">
+                    <img src="left-arrow.png" alt="Previous">
+                </button>
+                <button onclick="changeSlide(1)">
+                    <img src="right-arrow.png" alt="Next">
+                </button>
             </div>
         </div>
     </div>
@@ -284,18 +295,23 @@
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slideshow-container img');
+        const slideshowContainer = document.querySelector('.slideshow-container');
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         function checkPassword() {
             const password = document.getElementById("pass").value;
             if (password === "12345") {
-                document.getElementById("gallery").style.display = "block";
-                document.getElementById("gallery").classList.add("show");
                 document.getElementById("pass").style.display = "none";
                 document.querySelector("button[onclick='checkPassword()']").style.display = "none";
                 document.querySelector("p").style.display = "none";
-                document.querySelector(".intro-text").style.display = "none";
-                showSlide(currentSlide);
-                startAutoSlide(); // 啟動自動播放
+                setTimeout(() => {
+                    document.querySelector(".intro-text").style.display = "none";
+                    document.getElementById("gallery").style.display = "block";
+                    document.getElementById("gallery").classList.add("show");
+                    showSlide(currentSlide);
+                    startAutoSlide();
+                }, 8000);
             } else {
                 alert("密碼錯誤！");
             }
@@ -321,7 +337,26 @@
         function startAutoSlide() {
             setInterval(() => {
                 changeSlide(1);
-            }, 5000); // 每 5 秒切換一次
+            }, 5000);
+        }
+
+        slideshowContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slideshowContainer.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchStartX - touchEndX > swipeThreshold) {
+                changeSlide(1);
+            }
+            if (touchEndX - touchStartX > swipeThreshold) {
+                changeSlide(-1);
+            }
         }
     </script>
 </body>
